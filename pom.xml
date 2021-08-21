@@ -9,6 +9,7 @@
         <module>performance-producer-common</module>
         <module>performance-producer-kafka</module>
         <module>performance-producer-pulsar</module>
+        <module>integration-test</module>
     </modules>
 
     <parent>
