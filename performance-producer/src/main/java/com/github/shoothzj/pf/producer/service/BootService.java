@@ -12,7 +12,6 @@ import com.github.shoothzj.pf.producer.module.ProduceType;
 import com.github.shoothzj.pf.producer.pulsar.config.PulsarConfig;
 import com.github.shoothzj.pf.producer.pulsar.service.PulsarSendService;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,8 +44,7 @@ public class BootService {
     @Autowired
     private PulsarConfig pulsarConfig;
 
-    @Autowired
-    private List<AbstractProduceThread> threads = new ArrayList<>();
+    private final List<AbstractProduceThread> threads = new ArrayList<>();
 
     @PostConstruct
     public void init() throws Exception {
