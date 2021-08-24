@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
 import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.PulsarClient;
+import org.apache.pulsar.client.api.SizeUnit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +36,9 @@ public class PulsarSendService extends AbstractProduceThread {
 
     @Override
     public void init() throws Exception {
-        PulsarClient client = PulsarClient.builder().serviceUrl(pulsarConfig.pulsarAddr).build();
+        PulsarClient client = PulsarClient.builder().memoryLimit(pulsarConfig.memoryLimitMb, SizeUnit.MEGA_BYTES).serviceUrl(pulsarConfig.pulsarAddr).build();
         for (int i = 0; i < pulsarConfig.producerNum; i++) {
-            Producer<byte[]> producer = client.newProducer().topic(pulsarConfig.topic).create();
+            Producer<byte[]> producer = client.newProducer().maxPendingMessages(pulsarConfig.maxPendingMessage).topic(pulsarConfig.topic).create();
             producers.add(producer);
         }
     }

@@ -23,4 +23,10 @@ public class PulsarConfig {
     @Value("${PULSAR_MESSAGE_BYTE:1024}")
     public int messageByte;
 
+    @Value("${PULSAR_MEMORY_LIMIT_MB:50}")
+    public int memoryLimitMb;
+
+    @Value("${PULSAR_MAX_PENDING_MESSAGE:1000}")
+    public int maxPendingMessage;
+
 }
