@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
  */
 @Configuration
 @Service
-public class CommonConfig {
+public class ThreadConfig {
 
-    @Value("${WORK_NUM:1}")
-    public int workNum;
+    @Value("${PRODUCE_RATE:1000}")
+    public int produceRate;
+
+    @Value("${PRODUCE_MINUTE:30}")
+    public int produceMinute;
 
 }

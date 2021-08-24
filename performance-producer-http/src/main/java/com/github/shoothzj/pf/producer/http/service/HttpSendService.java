@@ -1,6 +1,7 @@
 package com.github.shoothzj.pf.producer.http.service;
 
 import com.github.shoothzj.pf.producer.common.AbstractProduceThread;
+import com.github.shoothzj.pf.producer.common.config.ThreadConfig;
 import com.github.shoothzj.pf.producer.http.config.HttpConfig;
 import com.github.shoothzj.pf.producer.http.util.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +27,8 @@ public class HttpSendService extends AbstractProduceThread {
 
     private CloseableHttpAsyncClient client;
 
-    public HttpSendService(int index, int limit, HttpConfig httpConfig) {
-        super(index, limit);
+    public HttpSendService(int index, ThreadConfig threadConfig, HttpConfig httpConfig) {
+        super(index, threadConfig);
         this.httpConfig = httpConfig;
     }
 

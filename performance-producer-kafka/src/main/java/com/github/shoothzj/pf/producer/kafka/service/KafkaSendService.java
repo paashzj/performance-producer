@@ -1,6 +1,7 @@
 package com.github.shoothzj.pf.producer.kafka.service;
 
 import com.github.shoothzj.pf.producer.common.AbstractProduceThread;
+import com.github.shoothzj.pf.producer.common.config.ThreadConfig;
 import com.github.shoothzj.pf.producer.kafka.config.KafkaConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -25,8 +26,8 @@ public class KafkaSendService extends AbstractProduceThread {
 
     private final Random random;
 
-    public KafkaSendService(int index, int limit, KafkaConfig kafkaConfig) {
-        super(index, limit);
+    public KafkaSendService(int index, ThreadConfig threadConfig, KafkaConfig kafkaConfig) {
+        super(index, threadConfig);
         this.kafkaConfig = kafkaConfig;
         this.producers = new ArrayList<>();
         this.random = new Random();

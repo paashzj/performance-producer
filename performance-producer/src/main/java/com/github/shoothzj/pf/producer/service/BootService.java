@@ -2,6 +2,7 @@ package com.github.shoothzj.pf.producer.service;
 
 import com.github.shoothzj.pf.producer.common.AbstractProduceThread;
 import com.github.shoothzj.pf.producer.common.config.CommonConfig;
+import com.github.shoothzj.pf.producer.common.config.ThreadConfig;
 import com.github.shoothzj.pf.producer.config.PfConfig;
 import com.github.shoothzj.pf.producer.http.config.HttpConfig;
 import com.github.shoothzj.pf.producer.http.service.HttpSendService;
@@ -30,6 +31,9 @@ public class BootService {
     private CommonConfig commonConfig;
 
     @Autowired
+    private ThreadConfig threadConfig;
+
+    @Autowired
     private PfConfig pfConfig;
 
     @Autowired
@@ -48,11 +52,11 @@ public class BootService {
     public void init() throws Exception {
         for (int i = 0; i < commonConfig.workNum; i++) {
             if (pfConfig.produceType.equals(ProduceType.HTTP)) {
-                threads.add(new HttpSendService(i, commonConfig.produceRate, httpConfig));
+                threads.add(new HttpSendService(i, threadConfig, httpConfig));
             } else if (pfConfig.produceType.equals(ProduceType.KAFKA)) {
-                threads.add(new KafkaSendService(i, commonConfig.produceRate, kafkaConfig));
+                threads.add(new KafkaSendService(i, threadConfig, kafkaConfig));
             } else if (pfConfig.produceType.equals(ProduceType.PULSAR)) {
-                threads.add(new PulsarSendService(i, commonConfig.produceRate, pulsarConfig));
+                threads.add(new PulsarSendService(i, threadConfig, pulsarConfig));
             }
         }
         for (AbstractProduceThread thread : threads) {

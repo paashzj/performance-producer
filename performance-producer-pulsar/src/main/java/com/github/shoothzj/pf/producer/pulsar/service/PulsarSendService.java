@@ -1,6 +1,7 @@
 package com.github.shoothzj.pf.producer.pulsar.service;
 
 import com.github.shoothzj.pf.producer.common.AbstractProduceThread;
+import com.github.shoothzj.pf.producer.common.config.ThreadConfig;
 import com.github.shoothzj.pf.producer.common.util.RandomUtil;
 import com.github.shoothzj.pf.producer.pulsar.config.PulsarConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +26,8 @@ public class PulsarSendService extends AbstractProduceThread {
 
     private final Random random;
 
-    public PulsarSendService(int index, int limit, PulsarConfig pulsarConfig) {
-        super(index, limit);
+    public PulsarSendService(int index, ThreadConfig threadConfig, PulsarConfig pulsarConfig) {
+        super(index, threadConfig);
         this.producers = new ArrayList<>();
         this.pulsarConfig = pulsarConfig;
         this.random = new Random();
