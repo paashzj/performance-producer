@@ -2,6 +2,9 @@ package com.github.shoothzj.pf.producer.kafka.service;
 
 import com.github.shoothzj.pf.producer.common.AbstractProduceThread;
 import com.github.shoothzj.pf.producer.common.config.ThreadConfig;
+import com.github.shoothzj.pf.producer.common.metrics.MetricBean;
+import com.github.shoothzj.pf.producer.common.metrics.MetricFactory;
+import com.github.shoothzj.pf.producer.common.module.OperationType;
 import com.github.shoothzj.pf.producer.kafka.config.KafkaConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -26,11 +29,14 @@ public class KafkaSendService extends AbstractProduceThread {
 
     private final Random random;
 
-    public KafkaSendService(int index, ThreadConfig threadConfig, KafkaConfig kafkaConfig) {
-        super(index, threadConfig);
+    private final MetricBean metricBean;
+
+    public KafkaSendService(int index, MetricFactory metricFactory, ThreadConfig threadConfig, KafkaConfig kafkaConfig) {
+        super(index, metricFactory, threadConfig);
         this.kafkaConfig = kafkaConfig;
         this.producers = new ArrayList<>();
         this.random = new Random();
+        this.metricBean = newMetricBean(OperationType.PRODUCE);
     }
 
     @Override
@@ -45,15 +51,23 @@ public class KafkaSendService extends AbstractProduceThread {
     }
 
     @Override
-    protected void sendReq() throws Exception {
-        ProducerRecord<String, String> record = getRecord(kafkaConfig.topic, kafkaConfig.messageByte);
-        producers.get(random.nextInt(kafkaConfig.producerNum)).send(record, (recordMetadata, e) -> {
-            if (e != null) {
-                log.error("exception is ", e);
-            } else {
-                log.debug("send record to [{}]", record.topic());
-            }
-        });
+    protected void send() {
+        long startTime = System.currentTimeMillis();
+        try {
+            ProducerRecord<String, String> record = getRecord(kafkaConfig.topic, kafkaConfig.messageByte);
+            producers.get(random.nextInt(kafkaConfig.producerNum)).send(record, (recordMetadata, e) -> {
+                if (e != null) {
+                    metricBean.fail(System.currentTimeMillis() - startTime);
+                    log.error("exception is ", e);
+                } else {
+                    metricBean.success(System.currentTimeMillis() - startTime);
+                    log.debug("send record to [{}]", record.topic());
+                }
+            });
+        } catch (Exception e) {
+            metricBean.fail(System.currentTimeMillis() - startTime);
+            log.error("send req exception ", e);
+        }
     }
 
     private ProducerRecord<String, String> getRecord(String topic, int messageByte) {

@@ -2,6 +2,9 @@ package com.github.shoothzj.pf.producer.pulsar.service;
 
 import com.github.shoothzj.pf.producer.common.AbstractProduceThread;
 import com.github.shoothzj.pf.producer.common.config.ThreadConfig;
+import com.github.shoothzj.pf.producer.common.metrics.MetricBean;
+import com.github.shoothzj.pf.producer.common.metrics.MetricFactory;
+import com.github.shoothzj.pf.producer.common.module.OperationType;
 import com.github.shoothzj.pf.producer.common.util.RandomUtil;
 import com.github.shoothzj.pf.producer.pulsar.config.PulsarConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +30,14 @@ public class PulsarSendService extends AbstractProduceThread {
 
     private final Random random;
 
-    public PulsarSendService(int index, ThreadConfig threadConfig, PulsarConfig pulsarConfig) {
-        super(index, threadConfig);
+    private final MetricBean metricBean;
+
+    public PulsarSendService(int index, MetricFactory metricFactory, ThreadConfig threadConfig, PulsarConfig pulsarConfig) {
+        super(index, metricFactory, threadConfig);
         this.producers = new ArrayList<>();
         this.pulsarConfig = pulsarConfig;
         this.random = new Random();
+        this.metricBean = newMetricBean(OperationType.PRODUCE);
     }
 
     @Override
@@ -44,15 +50,23 @@ public class PulsarSendService extends AbstractProduceThread {
     }
 
     @Override
-    protected void sendReq() throws Exception {
-        CompletableFuture<MessageId> messageIdCompletableFuture = producers.get(random.nextInt(pulsarConfig.producerNum)).sendAsync(RandomUtil.getRandomBytes(pulsarConfig.messageByte));
-        messageIdCompletableFuture.whenComplete((messageId, throwable) -> {
-            if (throwable != null) {
-                log.error("error is ", throwable);
-            } else {
-                log.info("message id is [{}]", messageId);
-            }
-        });
+    protected void send() {
+        long startTime = System.currentTimeMillis();
+        try {
+            CompletableFuture<MessageId> messageIdCompletableFuture = producers.get(random.nextInt(pulsarConfig.producerNum)).sendAsync(RandomUtil.getRandomBytes(pulsarConfig.messageByte));
+            messageIdCompletableFuture.whenComplete((messageId, throwable) -> {
+                if (throwable != null) {
+                    metricBean.fail(System.currentTimeMillis() - startTime);
+                    log.error("error is ", throwable);
+                } else {
+                    metricBean.success(System.currentTimeMillis() - startTime);
+                    log.info("message id is [{}]", messageId);
+                }
+            });
+        } catch (Exception e) {
+            metricBean.fail(System.currentTimeMillis() - startTime);
+            log.error("send req exception ", e);
+        }
     }
 
 }

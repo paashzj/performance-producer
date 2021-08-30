@@ -2,6 +2,9 @@ package com.github.shoothzj.pf.producer.http.service;
 
 import com.github.shoothzj.pf.producer.common.AbstractProduceThread;
 import com.github.shoothzj.pf.producer.common.config.ThreadConfig;
+import com.github.shoothzj.pf.producer.common.metrics.MetricBean;
+import com.github.shoothzj.pf.producer.common.metrics.MetricFactory;
+import com.github.shoothzj.pf.producer.common.module.OperationType;
 import com.github.shoothzj.pf.producer.http.config.HttpConfig;
 import com.github.shoothzj.pf.producer.http.util.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +30,12 @@ public class HttpSendService extends AbstractProduceThread {
 
     private CloseableHttpAsyncClient client;
 
-    public HttpSendService(int index, ThreadConfig threadConfig, HttpConfig httpConfig) {
-        super(index, threadConfig);
+    private final MetricBean metricBean;
+
+    public HttpSendService(int index, MetricFactory metricFactory, ThreadConfig threadConfig, HttpConfig httpConfig) {
+        super(index, metricFactory, threadConfig);
         this.httpConfig = httpConfig;
+        this.metricBean = newMetricBean(OperationType.PRODUCE);
     }
 
     @Override
@@ -50,25 +56,37 @@ public class HttpSendService extends AbstractProduceThread {
     }
 
     @Override
-    protected void sendReq() throws Exception {
-        HttpHost host = new HttpHost(httpConfig.httpHost, httpConfig.httpPort);
-        SimpleHttpRequest simpleHttpRequest = new SimpleHttpRequest("POST", host, "/echo");
-        simpleHttpRequest.setBody(HttpUtil.getHttpData(), ContentType.APPLICATION_JSON);
-        client.execute(simpleHttpRequest, new FutureCallback<SimpleHttpResponse>() {
-            @Override
-            public void completed(SimpleHttpResponse simpleHttpResponse) {
-                log.info("http request success, response code is [{}]", simpleHttpResponse.getCode());
-            }
+    protected void send() {
+        long startTime = System.currentTimeMillis();
+        try {
+            HttpHost host = new HttpHost(httpConfig.httpHost, httpConfig.httpPort);
+            SimpleHttpRequest simpleHttpRequest = new SimpleHttpRequest("POST", host, "/echo");
+            simpleHttpRequest.setBody(HttpUtil.getHttpData(), ContentType.APPLICATION_JSON);
+            client.execute(simpleHttpRequest, new FutureCallback<SimpleHttpResponse>() {
+                @Override
+                public void completed(SimpleHttpResponse simpleHttpResponse) {
+                    if (simpleHttpResponse.getCode() >= 200 && simpleHttpResponse.getCode() > 200) {
+                        metricBean.success(System.currentTimeMillis() - startTime);
+                    } else {
+                        metricBean.fail(System.currentTimeMillis() - startTime);
+                    }
+                    log.info("http request success, response code is [{}]", simpleHttpResponse.getCode());
+                }
 
-            @Override
-            public void failed(Exception e) {
-                log.error("fucking error is ", e);
-            }
+                @Override
+                public void failed(Exception e) {
+                    metricBean.fail(System.currentTimeMillis() - startTime);
+                    log.error("send error is ", e);
+                }
 
-            @Override
-            public void cancelled() {
+                @Override
+                public void cancelled() {
 
-            }
-        });
+                }
+            });
+        } catch (Exception e) {
+            metricBean.fail(System.currentTimeMillis() - startTime);
+            log.error("send req exception ", e);
+        }
     }
 }
