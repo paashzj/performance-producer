@@ -10,6 +10,13 @@
         <module>performance-producer-kafka</module>
         <module>performance-producer-pulsar</module>
         <module>integration-test</module>
+        <module>performance-producer-rocketmq</module>
+        <module>performance-producer-postgre</module>
+        <module>performance-producer-mysql</module>
+        <module>performance-producer-es</module>
+        <module>performance-producer-redis</module>
+        <module>performance-producer-mongo</module>
+        <module>performance-producer-influx</module>
     </modules>
 
     <parent>

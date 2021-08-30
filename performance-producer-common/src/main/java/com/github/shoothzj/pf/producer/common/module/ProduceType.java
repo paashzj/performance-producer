@@ -13,11 +13,11 @@ public enum ProduceType {
     ROCKETMQ,
     // relation Db
     POSTGRE,
-    Mysql,
+    MYSQL,
     // No sql
-    ElasticSearch,
-    Redis,
-    Mongo,
+    ES,
+    REDIS,
+    MONGO,
     // ts db
-    Influx,
+    INFLUX,
 }
