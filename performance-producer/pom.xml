@@ -19,7 +19,17 @@
     <dependencies>
         <dependency>
             <groupId>com.github.shoothzj</groupId>
+            <artifactId>performance-producer-es</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.shoothzj</groupId>
             <artifactId>performance-producer-http</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.shoothzj</groupId>
+            <artifactId>performance-producer-influx</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>
@@ -29,7 +39,27 @@
         </dependency>
         <dependency>
             <groupId>com.github.shoothzj</groupId>
+            <artifactId>performance-producer-mongo</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.shoothzj</groupId>
+            <artifactId>performance-producer-mysql</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.shoothzj</groupId>
+            <artifactId>performance-producer-postgre</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.shoothzj</groupId>
             <artifactId>performance-producer-pulsar</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.shoothzj</groupId>
+            <artifactId>performance-producer-redis</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>

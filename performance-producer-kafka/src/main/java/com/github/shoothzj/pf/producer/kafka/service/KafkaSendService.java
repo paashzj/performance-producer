@@ -23,7 +23,7 @@ import java.util.Random;
 @Slf4j
 public class KafkaSendService extends AbstractProduceThread {
 
-    private KafkaConfig kafkaConfig;
+    private final KafkaConfig kafkaConfig;
 
     private List<KafkaProducer<String, String>> producers;
 
