@@ -13,6 +13,8 @@ import com.github.shoothzj.pf.producer.kafka.service.KafkaSendService;
 import com.github.shoothzj.pf.producer.common.module.ProduceType;
 import com.github.shoothzj.pf.producer.pulsar.config.PulsarConfig;
 import com.github.shoothzj.pf.producer.pulsar.service.PulsarSendService;
+import com.github.shoothzj.pf.producer.rocketmq.config.RocketMqConfig;
+import com.github.shoothzj.pf.producer.rocketmq.service.RocketMqService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +49,9 @@ public class BootService {
     private PulsarConfig pulsarConfig;
 
     @Autowired
+    private RocketMqConfig rocketMqConfig;
+
+    @Autowired
     private MetricsService metricsService;
 
     private final List<AbstractProduceThread> threads = new ArrayList<>();
@@ -61,6 +66,8 @@ public class BootService {
                 threads.add(new KafkaSendService(i, metricFactory, threadConfig, kafkaConfig));
             } else if (pfConfig.produceType.equals(ProduceType.PULSAR)) {
                 threads.add(new PulsarSendService(i, metricFactory, threadConfig, pulsarConfig));
+            } else if (pfConfig.produceType.equals(ProduceType.ROCKETMQ)) {
+                threads.add(new RocketMqService(i, metricFactory, threadConfig, rocketMqConfig));
             }
         }
         for (AbstractProduceThread thread : threads) {
