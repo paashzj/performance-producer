@@ -56,8 +56,14 @@ public class MetricBean {
         this.failCounter = meterRegistry.counter(acquireMetricName(FAIL_COUNT_NAME_FORMAT), tags);
         this.successSummary = meterRegistry.summary(acquireMetricName(SUCCESS_LATENCY_SUMMARY_NAME_FORMAT), tags);
         this.failSummary = meterRegistry.summary(acquireMetricName(FAIL_LATENCY_SUMMARY_NAME_FORMAT), tags);
-        this.successTimer = meterRegistry.timer(acquireMetricName(SUCCESS_LATENCY_TIMER_NAME_FORMAT), tags);
-        this.failTimer = meterRegistry.timer(acquireMetricName(FAIL_LATENCY_TIMER_NAME_FORMAT), tags);
+        this.successTimer = Timer.builder(acquireMetricName(SUCCESS_LATENCY_TIMER_NAME_FORMAT))
+                .publishPercentiles(0.5, 0.75, 0.9, 0.95, 0.99, 0.999)
+                .publishPercentileHistogram(true)
+                .tags(tags).register(meterRegistry);
+        this.failTimer = Timer.builder(acquireMetricName(FAIL_LATENCY_TIMER_NAME_FORMAT))
+                .publishPercentiles(0.5, 0.75, 0.9, 0.95, 0.99, 0.999)
+                .publishPercentileHistogram(true)
+                .tags(tags).register(meterRegistry);
     }
 
     private String acquireMetricName(String format) {
