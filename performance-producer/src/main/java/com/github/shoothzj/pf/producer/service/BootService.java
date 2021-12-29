@@ -6,15 +6,17 @@ import com.github.shoothzj.pf.producer.common.config.ThreadConfig;
 import com.github.shoothzj.pf.producer.common.metrics.MetricFactory;
 import com.github.shoothzj.pf.producer.common.service.MetricsService;
 import com.github.shoothzj.pf.producer.config.PfConfig;
-import com.github.shoothzj.pf.producer.http.config.HttpConfig;
-import com.github.shoothzj.pf.producer.http.service.HttpSendService;
-import com.github.shoothzj.pf.producer.kafka.config.KafkaConfig;
-import com.github.shoothzj.pf.producer.kafka.service.KafkaSendService;
+import com.github.shoothzj.pf.producer.http.HttpConfig;
+import com.github.shoothzj.pf.producer.http.HttpSendService;
+import com.github.shoothzj.pf.producer.kafka.KafkaConfig;
+import com.github.shoothzj.pf.producer.kafka.KafkaSendService;
 import com.github.shoothzj.pf.producer.common.module.ProduceType;
-import com.github.shoothzj.pf.producer.pulsar.config.PulsarConfig;
-import com.github.shoothzj.pf.producer.pulsar.service.PulsarSendService;
-import com.github.shoothzj.pf.producer.rocketmq.config.RocketMqConfig;
-import com.github.shoothzj.pf.producer.rocketmq.service.RocketMqService;
+import com.github.shoothzj.pf.producer.mqtt.MqttConfig;
+import com.github.shoothzj.pf.producer.mqtt.MqttSendService;
+import com.github.shoothzj.pf.producer.pulsar.PulsarConfig;
+import com.github.shoothzj.pf.producer.pulsar.PulsarSendService;
+import com.github.shoothzj.pf.producer.rocketmq.RocketMqConfig;
+import com.github.shoothzj.pf.producer.rocketmq.RocketMqService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,9 @@ public class BootService {
     private KafkaConfig kafkaConfig;
 
     @Autowired
+    private MqttConfig mqttConfig;
+
+    @Autowired
     private PulsarConfig pulsarConfig;
 
     @Autowired
@@ -64,6 +69,8 @@ public class BootService {
                 threads.add(new HttpSendService(i, metricFactory, threadConfig, httpConfig));
             } else if (pfConfig.produceType.equals(ProduceType.KAFKA)) {
                 threads.add(new KafkaSendService(i, metricFactory, threadConfig, kafkaConfig));
+            } else if (pfConfig.produceType.equals(ProduceType.MQTT)) {
+                threads.add(new MqttSendService(i, metricFactory, threadConfig, mqttConfig));
             } else if (pfConfig.produceType.equals(ProduceType.PULSAR)) {
                 threads.add(new PulsarSendService(i, metricFactory, threadConfig, pulsarConfig));
             } else if (pfConfig.produceType.equals(ProduceType.ROCKETMQ)) {

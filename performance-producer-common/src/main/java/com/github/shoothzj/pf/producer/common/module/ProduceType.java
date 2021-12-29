@@ -9,6 +9,7 @@ public enum ProduceType {
     HTTP,
     // middleware
     KAFKA,
+    MQTT,
     PULSAR,
     ROCKETMQ,
     // relation Db

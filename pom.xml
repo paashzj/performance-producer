@@ -17,6 +17,7 @@
         <module>performance-producer-redis</module>
         <module>performance-producer-mongo</module>
         <module>performance-producer-influx</module>
+        <module>performance-producer-mqtt</module>
     </modules>
 
     <parent>
@@ -26,6 +27,7 @@
     </parent>
 
     <artifactId>performance-producer-parent</artifactId>
+    <name>performance-producer-parent</name>
     <version>0.0.1</version>
     <packaging>pom</packaging>
 
