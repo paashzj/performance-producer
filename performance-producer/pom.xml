@@ -44,6 +44,11 @@
         </dependency>
         <dependency>
             <groupId>com.github.shoothzj</groupId>
+            <artifactId>performance-producer-mqtt</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.shoothzj</groupId>
             <artifactId>performance-producer-mysql</artifactId>
             <version>0.0.1</version>
         </dependency>

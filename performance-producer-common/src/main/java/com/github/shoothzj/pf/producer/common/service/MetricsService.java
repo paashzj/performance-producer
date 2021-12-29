@@ -1,8 +1,6 @@
 package com.github.shoothzj.pf.producer.common.service;
 
-import com.github.shoothzj.pf.producer.common.metrics.MetricBean;
 import com.github.shoothzj.pf.producer.common.metrics.MetricFactory;
-import com.github.shoothzj.pf.producer.common.module.OperationType;
 import com.github.shoothzj.pf.producer.common.module.ProduceType;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;

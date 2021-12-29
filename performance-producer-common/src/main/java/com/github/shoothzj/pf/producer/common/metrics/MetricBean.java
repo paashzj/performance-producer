@@ -48,7 +48,8 @@ public class MetricBean {
 
     private final Timer failTimer;
 
-    public MetricBean(MeterRegistry meterRegistry, ProduceType produceType, OperationType operationType, String... tags) {
+    public MetricBean(MeterRegistry meterRegistry, ProduceType produceType, OperationType operationType,
+                      String... tags) {
         this.produceType = produceType;
         this.operationType = operationType;
         this.counter = meterRegistry.counter(acquireMetricName(COUNT_NAME_FORMAT), tags);
