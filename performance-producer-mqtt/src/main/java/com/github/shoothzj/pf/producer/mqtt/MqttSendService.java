@@ -8,6 +8,7 @@ import com.github.shoothzj.pf.producer.common.module.OperationType;
 import com.github.shoothzj.pf.producer.common.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.util.ArrayList;
@@ -38,6 +39,10 @@ public class MqttSendService extends AbstractProduceThread {
         for (int i = 0; i < mqttConfig.producerNum; i++) {
             MqttClient mqttClient = new MqttClient(String.format("tcp://%s:%d", mqttConfig.host, mqttConfig.port),
                     mqttConfig.clientId);
+            MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
+            mqttConnectOptions.setUserName(mqttConfig.username);
+            mqttConnectOptions.setPassword(mqttConfig.password.toCharArray());
+            mqttClient.connect(mqttConnectOptions);
             mqttClients.add(mqttClient);
         }
     }
