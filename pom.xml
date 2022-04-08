@@ -43,18 +43,13 @@
     <parent>
         <groupId>com.github.shoothzj</groupId>
         <artifactId>java-dependency</artifactId>
-        <version>3.1.22</version>
+        <version>3.1.23</version>
     </parent>
 
     <artifactId>performance-producer-parent</artifactId>
     <name>performance-producer-parent</name>
     <version>0.0.1</version>
     <packaging>pom</packaging>
-
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -64,7 +59,7 @@
         <dependency>
             <groupId>com.github.shoothzj</groupId>
             <artifactId>java-tool</artifactId>
-            <version>3.1.10</version>
+            <version>3.1.11</version>
         </dependency>
         <!-- test -->
         <dependency>
