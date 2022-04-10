@@ -62,7 +62,7 @@ public class PulsarSendService extends AbstractProduceThread {
     @Override
     public void init() throws Exception {
         PulsarClient client = PulsarClient.builder().memoryLimit(pulsarConfig.memoryLimitMb, SizeUnit.MEGA_BYTES)
-                .serviceUrl(pulsarConfig.pulsarAddr).build();
+                .serviceUrl(String.format("pulsar://%s", pulsarConfig.pulsarAddr)).build();
         for (int i = 0; i < pulsarConfig.producerNum; i++) {
             Producer<byte[]> producer = client.newProducer().maxPendingMessages(pulsarConfig.maxPendingMessage)
                     .topic(pulsarConfig.topic).create();

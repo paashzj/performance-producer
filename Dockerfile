@@ -28,6 +28,8 @@ FROM ttbb/base:jdk17
 LABEL maintainer="shoothzj@gmail.com"
 
 COPY --from=build /opt/sh/compile/performance-producer/target/performance-producer-0.0.1.jar /opt/sh/pf-producer.jar
+COPY --from=build /opt/sh/compile/performance-producer/target/lib/* /opt/sh/lib/
+COPY --from=build /opt/sh/compile/performance-producer/target/conf/* /opt/sh/conf/
 
 COPY docker-build /opt/sh
 
