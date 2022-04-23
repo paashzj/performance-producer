@@ -43,7 +43,7 @@
     <parent>
         <groupId>com.github.shoothzj</groupId>
         <artifactId>java-dependency</artifactId>
-        <version>3.1.25</version>
+        <version>3.1.26</version>
     </parent>
 
     <artifactId>performance-producer-parent</artifactId>
@@ -74,7 +74,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.2</version>
                 <configuration>
                     <configLocation>./ci/checkstyle/checkstyle.xml</configLocation>
                     <suppressionsLocation>./ci/checkstyle/suppressions.xml</suppressionsLocation>
@@ -86,16 +85,14 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.6.0.0</version>
                 <configuration>
                     <xmlOutput>true</xmlOutput>
-                    <failOnError>false</failOnError>
+                    <failOnError>true</failOnError>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.8</version>
                 <executions>
                     <execution>
                         <goals>
