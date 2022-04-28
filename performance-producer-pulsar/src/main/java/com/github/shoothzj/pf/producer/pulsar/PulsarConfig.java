@@ -30,8 +30,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class PulsarConfig {
 
-    @Value("${PULSAR_ADDR:localhost:8080}")
-    public String pulsarAddr;
+    @Value("${PULSAR_HOST:localhost}")
+    public String host;
+
+    @Value("${PULSAR_PORT:8080}")
+    public int port;
 
     @Value("${PULSAR_PRODUCER_NUM_PER_THREAD:1}")
     public int producerNum;
