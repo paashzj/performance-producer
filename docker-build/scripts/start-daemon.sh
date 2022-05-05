@@ -27,22 +27,29 @@ echo `pwd`
 mkdir -p /opt/sh/logs
 
 if [ -n "${PULSAR_JAR_VERSION}" ] && [ -n "${MAVEN_ADDRESS}" ]; then
-  cd /opt/sh/lib
-
   # delete original version jar of pulsar
-  rm -rf pulsar-client*
-  rm -rf pulsar-common*
-  rm -rf pulsar-package-core*
-  rm -rf pulsar-transaction-common*
+  rm -rf /opt/sh/lib/pulsar-client*
+  rm -rf /opt/sh/lib/pulsar-common*
+  rm -rf /opt/sh/lib/pulsar-package-core*
+  rm -rf /opt/sh/lib/pulsar-transaction-common*
 
   # download specify version jar of pulsar
-  curl  "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-client-admin-api/"${PULSAR_JAR_VERSION}"/pulsar-client-admin-api-"${PULSAR_JAR_VERSION}".jar -o pulsar-client-admin-api-"${PULSAR_JAR_VERSION}".jar
-  curl  "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-client-admin-original/"${PULSAR_JAR_VERSION}"/pulsar-client-admin-original-"${PULSAR_JAR_VERSION}".jar -o pulsar-client-admin-original-"${PULSAR_JAR_VERSION}".jar
-  curl  "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-client-api/"${PULSAR_JAR_VERSION}"/pulsar-client-api-"${PULSAR_JAR_VERSION}".jar -o pulsar-client-api-"${PULSAR_JAR_VERSION}".jar
-  curl  "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-client-original/"${PULSAR_JAR_VERSION}"/pulsar-client-original-"${PULSAR_JAR_VERSION}".jar -o pulsar-client-original-"${PULSAR_JAR_VERSION}".jar
-  curl  "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-common/"${PULSAR_JAR_VERSION}"/pulsar-common-"${PULSAR_JAR_VERSION}".jar -o pulsar-common-"${PULSAR_JAR_VERSION}".jar
-  curl  "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-package-core/"${PULSAR_JAR_VERSION}"/pulsar-package-core-"${PULSAR_JAR_VERSION}".jar -o pulsar-package-core-"${PULSAR_JAR_VERSION}".jar
-  curl  "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-transaction-common/"${PULSAR_JAR_VERSION}"/pulsar-transaction-common-"${PULSAR_JAR_VERSION}".jar -o pulsar-transaction-common-"${PULSAR_JAR_VERSION}".jar
+  wget -P /opt/sh/lib "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-client-admin-api/"${PULSAR_JAR_VERSION}"/pulsar-client-admin-api-"${PULSAR_JAR_VERSION}".jar
+  wget -P /opt/sh/lib "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-client-admin-original/"${PULSAR_JAR_VERSION}"/pulsar-client-admin-original-"${PULSAR_JAR_VERSION}".jar
+  wget -P /opt/sh/lib "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-client-api/"${PULSAR_JAR_VERSION}"/pulsar-client-api-"${PULSAR_JAR_VERSION}".jar
+  wget -P /opt/sh/lib "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-client-original/"${PULSAR_JAR_VERSION}"/pulsar-client-original-"${PULSAR_JAR_VERSION}".jar
+  wget -P /opt/sh/lib "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-common/"${PULSAR_JAR_VERSION}"/pulsar-common-"${PULSAR_JAR_VERSION}".jar
+  wget -P /opt/sh/lib "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-package-core/"${PULSAR_JAR_VERSION}"/pulsar-package-core-"${PULSAR_JAR_VERSION}".jar
+  wget -P /opt/sh/lib "${MAVEN_ADDRESS}"/org/apache/pulsar/pulsar-transaction-common/"${PULSAR_JAR_VERSION}"/pulsar-transaction-common-"${PULSAR_JAR_VERSION}".jar
+fi
+
+if [ -n "${APOLLO_JAR_VERSION}" ] && [ -n "${MAVEN_ADDRESS}" ]; then
+  rm -rf /opt/sh/lib/apollo*
+
+  # download specify version jar of apollo
+  wget -P /opt/sh/lib "${MAVEN_ADDRESS}"/com/ctrip/framework/apollo/apollo-client/"${APOLLO_JAR_VERSION}"/apollo-client-"${APOLLO_JAR_VERSION}".jar
+  wget -P /opt/sh/lib "${MAVEN_ADDRESS}"/com/ctrip/framework/apollo/apollo-core/"${APOLLO_JAR_VERSION}"/apollo-core-"${APOLLO_JAR_VERSION}".jar
+  wget -P /opt/sh/lib "${MAVEN_ADDRESS}"/com/ctrip/framework/apollo/apollo-openapi/"${APOLLO_JAR_VERSION}"/apollo-openapi-"${APOLLO_JAR_VERSION}".jar
 fi
 
 # memory option
