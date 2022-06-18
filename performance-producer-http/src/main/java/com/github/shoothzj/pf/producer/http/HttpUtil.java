@@ -21,9 +21,6 @@ package com.github.shoothzj.pf.producer.http;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author hezhangjian
- */
 @Slf4j
 public class HttpUtil {
 

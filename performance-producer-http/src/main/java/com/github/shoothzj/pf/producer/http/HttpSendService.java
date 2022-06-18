@@ -37,9 +37,6 @@ import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.reactor.IOReactorConfig;
 import org.apache.hc.core5.util.Timeout;
 
-/**
- * @author hezhangjian
- */
 @Slf4j
 public class HttpSendService extends AbstractProduceThread {
 

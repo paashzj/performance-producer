@@ -29,9 +29,6 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author hezhangjian
- */
 @Slf4j
 @Service
 public class MetricsService {

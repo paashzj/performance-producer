@@ -25,12 +25,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-/**
- * @author hezhangjian
- */
 @Slf4j
 @EnableAspectJAutoProxy
-@SpringBootApplication(exclude = {MongoAutoConfiguration.class})
+@SpringBootApplication(exclude = {MongoAutoConfiguration.class},
+        scanBasePackages = {"com.github.shoothzj.sdk.spring", "com.github.shoothzj.pf.consumer"}
+)
 public class Main {
 
     public static void main(String[] args) {

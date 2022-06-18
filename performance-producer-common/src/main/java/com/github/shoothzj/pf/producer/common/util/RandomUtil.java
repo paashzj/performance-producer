@@ -23,9 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * @author hezhangjian
- */
 @Slf4j
 public class RandomUtil {
 

@@ -34,9 +34,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-/**
- * @author hezhangjian
- */
 @Slf4j
 public class BatchProducerHeapBuffer {
 
