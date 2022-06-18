@@ -57,7 +57,7 @@ if [ ! -n "$HEAP_MEM" ]; then
   HEAP_MEM="1G"
 fi
 if [ ! -n "$DIR_MEM" ]; then
-  HEAP_MEM="1G"
+  DIR_MEM="1G"
 fi
 # mem option
 JVM_OPT="-Xmx${HEAP_MEM} -Xms${HEAP_MEM} -XX:MaxDirectMemorySize=${DIR_MEM}"
