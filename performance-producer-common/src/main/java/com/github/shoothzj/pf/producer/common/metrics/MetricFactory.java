@@ -24,9 +24,6 @@ import com.github.shoothzj.pf.producer.common.module.ProduceType;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author hezhangjian
- */
 @Slf4j
 public class MetricFactory {
 

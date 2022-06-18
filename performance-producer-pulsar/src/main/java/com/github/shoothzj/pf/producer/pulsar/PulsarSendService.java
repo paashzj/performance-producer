@@ -36,9 +36,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * @author hezhangjian
- */
 @Slf4j
 public class PulsarSendService extends AbstractProduceThread {
 

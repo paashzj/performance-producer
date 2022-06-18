@@ -35,9 +35,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
-/**
- * @author hezhangjian
- */
 @Slf4j
 public class KafkaSendService extends AbstractProduceThread {
 
