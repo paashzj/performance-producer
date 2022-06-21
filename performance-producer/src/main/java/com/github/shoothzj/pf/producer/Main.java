@@ -28,7 +28,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Slf4j
 @EnableAspectJAutoProxy
 @SpringBootApplication(exclude = {MongoAutoConfiguration.class},
-        scanBasePackages = {"com.github.shoothzj.sdk.spring", "com.github.shoothzj.pf.consumer"}
+        scanBasePackages = {"com.github.shoothzj.sdk.spring", "com.github.shoothzj.pf.producer"}
 )
 public class Main {
 
