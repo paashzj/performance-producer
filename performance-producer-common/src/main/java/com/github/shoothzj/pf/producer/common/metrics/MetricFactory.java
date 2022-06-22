@@ -36,8 +36,8 @@ public class MetricFactory {
         this.produceType = produceType;
     }
 
-    public MetricBean newMetricBean(OperationType operationType, String... tags) {
-        return new MetricBean(meterRegistry, produceType, operationType, tags);
+    public MetricBean newMetricBean(OperationType operationType) {
+        return new MetricBean(meterRegistry, produceType, operationType);
     }
 
 }
