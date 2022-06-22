@@ -68,8 +68,4 @@ public abstract class AbstractProduceThread extends Thread {
         return metricFactory.newMetricBean(operationType);
     }
 
-    protected MetricBean newMetricBean(OperationType operationType, String... tags) {
-        return metricFactory.newMetricBean(operationType, tags);
-    }
-
 }

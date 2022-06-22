@@ -32,23 +32,19 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class MetricBean {
 
-    private static final String COUNT_NAME_FORMAT = "%s_%s_count";
+    private static final String COUNT_NAME = "pf_producer_count";
 
-    private static final String SUCCESS_COUNT_NAME_FORMAT = "%s_%s_success_count";
+    private static final String SUCCESS_COUNT_NAME = "pf_producer_success_count";
 
-    private static final String FAIL_COUNT_NAME_FORMAT = "%s_%s_fail_count";
+    private static final String FAIL_COUNT_NAME = "pf_producer_fail_count";
 
-    private static final String SUCCESS_LATENCY_SUMMARY_NAME_FORMAT = "%s_%s_success_latency_summary";
+    private static final String SUCCESS_LATENCY_SUMMARY_NAME = "pf_producer_success_latency_summary";
 
-    private static final String FAIL_LATENCY_SUMMARY_NAME_FORMAT = "%s_%s_fail_latency_summary";
+    private static final String FAIL_LATENCY_SUMMARY_NAME = "pf_producer_fail_latency_summary";
 
-    private static final String SUCCESS_LATENCY_TIMER_NAME_FORMAT = "%s_%s_success_latency_timer";
+    private static final String SUCCESS_LATENCY_TIMER_NAME = "pf_producer_success_latency_timer";
 
-    private static final String FAIL_LATENCY_TIMER_NAME_FORMAT = "%s_%s_fail_latency_timer";
-
-    private final ProduceType produceType;
-
-    private final OperationType operationType;
+    private static final String FAIL_LATENCY_TIMER_NAME = "pf_producer_fail_latency_timer";
 
     private final Counter counter;
 
@@ -64,27 +60,26 @@ public class MetricBean {
 
     private final Timer failTimer;
 
-    public MetricBean(MeterRegistry meterRegistry, ProduceType produceType, OperationType operationType,
-                      String... tags) {
-        this.produceType = produceType;
-        this.operationType = operationType;
-        this.counter = meterRegistry.counter(acquireMetricName(COUNT_NAME_FORMAT), tags);
-        this.successCounter = meterRegistry.counter(acquireMetricName(SUCCESS_COUNT_NAME_FORMAT), tags);
-        this.failCounter = meterRegistry.counter(acquireMetricName(FAIL_COUNT_NAME_FORMAT), tags);
-        this.successSummary = meterRegistry.summary(acquireMetricName(SUCCESS_LATENCY_SUMMARY_NAME_FORMAT), tags);
-        this.failSummary = meterRegistry.summary(acquireMetricName(FAIL_LATENCY_SUMMARY_NAME_FORMAT), tags);
-        this.successTimer = Timer.builder(acquireMetricName(SUCCESS_LATENCY_TIMER_NAME_FORMAT))
+    public MetricBean(MeterRegistry meterRegistry, ProduceType produceType, OperationType operationType) {
+        String[] tags = new String[]{
+                "produce_type",
+                produceType.toString(),
+                "operation_type",
+                operationType.toString()
+        };
+        this.counter = meterRegistry.counter(COUNT_NAME, tags);
+        this.successCounter = meterRegistry.counter(SUCCESS_COUNT_NAME, tags);
+        this.failCounter = meterRegistry.counter(FAIL_COUNT_NAME, tags);
+        this.successSummary = meterRegistry.summary(SUCCESS_LATENCY_SUMMARY_NAME, tags);
+        this.failSummary = meterRegistry.summary(FAIL_LATENCY_SUMMARY_NAME, tags);
+        this.successTimer = Timer.builder(SUCCESS_LATENCY_TIMER_NAME)
                 .publishPercentiles(0.5, 0.75, 0.9, 0.95, 0.99, 0.999)
                 .publishPercentileHistogram(true)
                 .tags(tags).register(meterRegistry);
-        this.failTimer = Timer.builder(acquireMetricName(FAIL_LATENCY_TIMER_NAME_FORMAT))
+        this.failTimer = Timer.builder(FAIL_LATENCY_TIMER_NAME)
                 .publishPercentiles(0.5, 0.75, 0.9, 0.95, 0.99, 0.999)
                 .publishPercentileHistogram(true)
                 .tags(tags).register(meterRegistry);
-    }
-
-    private String acquireMetricName(String format) {
-        return String.format(format, produceType, operationType);
     }
 
     public void success(long cost) {
