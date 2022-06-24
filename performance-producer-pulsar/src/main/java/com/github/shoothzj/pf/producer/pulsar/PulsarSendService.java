@@ -39,9 +39,9 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class PulsarSendService extends AbstractProduceThread {
 
-    private PulsarConfig pulsarConfig;
+    private final PulsarConfig pulsarConfig;
 
-    private List<Producer<byte[]>> producers;
+    private final List<Producer<byte[]>> producers;
 
     private final Random random;
 

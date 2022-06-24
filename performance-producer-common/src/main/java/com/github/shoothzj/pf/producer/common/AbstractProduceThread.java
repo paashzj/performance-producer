@@ -35,7 +35,7 @@ public abstract class AbstractProduceThread extends Thread {
 
     private final long endTime;
 
-    protected MetricFactory metricFactory;
+    protected final MetricFactory metricFactory;
 
     public AbstractProduceThread(int index, MetricFactory metricFactory, ThreadConfig config) {
         setName("produce-" + index);
