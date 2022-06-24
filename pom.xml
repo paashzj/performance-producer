@@ -38,6 +38,7 @@
         <module>performance-producer-mongo</module>
         <module>performance-producer-influx</module>
         <module>performance-producer-mqtt</module>
+        <module>performance-producer-pravega</module>
     </modules>
     <properties>
         <sh-sdk.version>3.1.15</sh-sdk.version>
@@ -46,7 +47,7 @@
     <parent>
         <groupId>com.github.shoothzj</groupId>
         <artifactId>java-dependency</artifactId>
-        <version>3.1.31</version>
+        <version>3.1.32</version>
     </parent>
 
     <artifactId>performance-producer-parent</artifactId>

@@ -39,7 +39,7 @@ public class BatchProducer {
 
     public static void main(String[] args) throws Exception {
         String topic = "test";
-        System.out.println(String.format("topic is %s", topic));
+        System.out.printf("topic is %s%n", topic);
         PulsarClient pulsarClient = PulsarClient.builder()
                 .serviceUrl("http://127.0.0.1:8080")
                 .build();
@@ -52,17 +52,9 @@ public class BatchProducer {
             map.put("1", "2");
             final TypedMessageBuilder<String> value = stringTypedMessageBuilder.key("1").value("2").properties(map);
             final CompletableFuture<MessageId> completableFuture = value.sendAsync();
-            completableFuture.thenAccept(new Consumer<MessageId>() {
-                @Override
-                public void accept(MessageId messageId) {
-                    log.debug("msg id is {}", messageId);
-                }
-            }).exceptionally(new Function<Throwable, Void>() {
-                @Override
-                public Void apply(Throwable throwable) {
-                    log.error("send error ", throwable.getCause());
-                    return null;
-                }
+            completableFuture.thenAccept(messageId -> log.debug("msg id is {}", messageId)).exceptionally(throwable -> {
+                log.error("send error ", throwable.getCause());
+                return null;
             });
             CommonUtil.sleep(TimeUnit.MILLISECONDS, 1);
         }

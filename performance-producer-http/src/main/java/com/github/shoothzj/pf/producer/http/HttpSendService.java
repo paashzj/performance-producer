@@ -40,7 +40,7 @@ import org.apache.hc.core5.util.Timeout;
 @Slf4j
 public class HttpSendService extends AbstractProduceThread {
 
-    private HttpConfig httpConfig;
+    private final HttpConfig httpConfig;
 
     private CloseableHttpAsyncClient client;
 
@@ -76,7 +76,7 @@ public class HttpSendService extends AbstractProduceThread {
             HttpHost host = new HttpHost(httpConfig.httpHost, httpConfig.httpPort);
             SimpleHttpRequest simpleHttpRequest = new SimpleHttpRequest("POST", host, "/echo");
             simpleHttpRequest.setBody(HttpUtil.getHttpData(), ContentType.APPLICATION_JSON);
-            client.execute(simpleHttpRequest, new FutureCallback<SimpleHttpResponse>() {
+            client.execute(simpleHttpRequest, new FutureCallback<>() {
                 @Override
                 public void completed(SimpleHttpResponse simpleHttpResponse) {
                     if (simpleHttpResponse.getCode() >= 200 && simpleHttpResponse.getCode() > 200) {

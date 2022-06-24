@@ -40,7 +40,7 @@ public class KafkaSendService extends AbstractProduceThread {
 
     private final KafkaConfig kafkaConfig;
 
-    private List<KafkaProducer<String, String>> producers;
+    private final List<KafkaProducer<String, String>> producers;
 
     private final Random random;
 
