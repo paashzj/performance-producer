@@ -21,8 +21,12 @@ package com.github.shoothzj.pf.producer.integration.test;
 
 import com.github.shoothzj.javatool.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.pulsar.client.api.MessageId;
 import org.apache.pulsar.client.api.Producer;
-import org.apache.pulsar.client.api.*;
+import org.apache.pulsar.client.api.ProducerBuilder;
+import org.apache.pulsar.client.api.PulsarClient;
+import org.apache.pulsar.client.api.Schema;
+import org.apache.pulsar.client.api.TypedMessageBuilder;
 
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
