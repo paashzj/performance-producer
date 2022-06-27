@@ -68,6 +68,7 @@ public abstract class AbstractProduceThread extends Thread {
             sched.scheduleAtFixedRate(() -> {
                 if (System.currentTimeMillis() - endTime > 0) {
                     sched.shutdown();
+                    return;
                 }
                 command.run();
             }, 1,this.produceInterval, TimeUnit.SECONDS);
