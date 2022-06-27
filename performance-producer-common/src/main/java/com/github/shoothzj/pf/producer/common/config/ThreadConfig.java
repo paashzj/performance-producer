@@ -33,4 +33,7 @@ public class ThreadConfig {
     @Value("${PRODUCE_MINUTE:30}")
     public int produceMinute;
 
+    @Value("${PRODUCE_INTERVAL:0}")
+    public int produceInterval;
+
 }
