@@ -71,7 +71,7 @@ public abstract class AbstractProduceThread extends Thread {
                     return;
                 }
                 command.run();
-            }, 1,this.produceInterval, TimeUnit.SECONDS);
+            }, 1, this.produceInterval, TimeUnit.SECONDS);
             return;
         }
 
