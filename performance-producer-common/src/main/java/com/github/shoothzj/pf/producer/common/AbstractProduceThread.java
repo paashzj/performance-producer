@@ -24,6 +24,7 @@ import com.github.shoothzj.pf.producer.common.metrics.MetricBean;
 import com.github.shoothzj.pf.producer.common.metrics.MetricFactory;
 import com.github.shoothzj.pf.producer.common.module.OperationType;
 import com.google.common.util.concurrent.RateLimiter;
+import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ScheduledExecutorService;
@@ -64,14 +65,16 @@ public abstract class AbstractProduceThread extends Thread {
         };
 
         if (this.produceInterval != 0) {
-            ScheduledExecutorService sched = new ScheduledThreadPoolExecutor(1);
-            sched.scheduleAtFixedRate(() -> {
+            DefaultThreadFactory threadFactory = new DefaultThreadFactory(this.getName() + "-schedule");
+            ScheduledExecutorService executor =
+                    new ScheduledThreadPoolExecutor(1, threadFactory);
+            executor.scheduleAtFixedRate(() -> {
                 if (System.currentTimeMillis() - endTime > 0) {
-                    sched.shutdown();
+                    executor.shutdown();
                     return;
                 }
                 command.run();
-            }, 1, this.produceInterval, TimeUnit.SECONDS);
+            }, 0, this.produceInterval, TimeUnit.SECONDS);
             return;
         }
 
