@@ -29,17 +29,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>performance-producer-influx</artifactId>
+    <artifactId>performance-producer-common-ts</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.github.shoothzj</groupId>
             <artifactId>performance-producer-common</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.shoothzj</groupId>
-            <artifactId>performance-producer-common-ts</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>
