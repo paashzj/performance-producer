@@ -24,22 +24,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <module>performance-producer</module>
-        <module>performance-producer-http</module>
-        <module>performance-producer-common</module>
-        <module>performance-producer-kafka</module>
-        <module>performance-producer-pulsar</module>
         <module>integration-test</module>
-        <module>performance-producer-rocketmq</module>
-        <module>performance-producer-postgre</module>
-        <module>performance-producer-mysql</module>
-        <module>performance-producer-es</module>
-        <module>performance-producer-redis</module>
-        <module>performance-producer-mongo</module>
-        <module>performance-producer-influx</module>
-        <module>performance-producer-mqtt</module>
-        <module>performance-producer-pravega</module>
+        <module>performance-producer</module>
+        <module>performance-producer-common</module>
         <module>performance-producer-common-ts</module>
+        <module>performance-producer-es</module>
+        <module>performance-producer-http</module>
+        <module>performance-producer-influx</module>
+        <module>performance-producer-iotdb</module>
+        <module>performance-producer-kafka</module>
+        <module>performance-producer-mongo</module>
+        <module>performance-producer-mqtt</module>
+        <module>performance-producer-mysql</module>
+        <module>performance-producer-postgre</module>
+        <module>performance-producer-pravega</module>
+        <module>performance-producer-pulsar</module>
+        <module>performance-producer-redis</module>
+        <module>performance-producer-rocketmq</module>
         <module>performance-producer-tdengine</module>
     </modules>
     <properties>
